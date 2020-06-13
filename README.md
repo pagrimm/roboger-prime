@@ -4,7 +4,7 @@ By Peter Grimm, 05.29.2020
 
 ## Description
 
-Week 3 project for Epicodus. A page that will return a list of numbers from 0 to the inputted number, and replace numbers containing a one, two, or three with snippets of text. Designed to showcase my skills in looping Javascript logic, behavior driven development, and the separation of business and user interface logic. This prime version also combines the pig latin and Roman numeral exercises from earlier in the week. The interface is also an abomination.
+Week 3 project for Epicodus. A page that will return a list of numbers from 0 to the inputted number, and replace numbers containing a one, two, or three with snippets of text. Designed to showcase my skills in looping Javascript logic, behavior driven development, and the separation of business and user interface logic. This prime version also combines the pig latin and Roman numeral exercises from earlier in the week. The interface is also glorious and terrible.
 
 ## Specifications
 | Behavior                                                                           | Input  | Output                                   |
