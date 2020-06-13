@@ -1,14 +1,14 @@
 //USER INTERFACE LOGIC
 $(document).ready(function() {
   let numberRegex = /^[0-9]*$/;
-  name();
+  changeName();
 });
 
 function commandPrompt () {
   $("#prompt").text("Enter command (\"help\" for list):")
   $("#form1").submit(function(event){
     event.preventDefault();
-    let command = $("#main-input").val().toLowerCase();
+    let command = $("#main-input").val();
     duplicateInputLine();
     clearInput();
     if (typeof window[command] === "function") {
@@ -22,10 +22,10 @@ function commandPrompt () {
 
 function help () {
   addMessage("clear (clear the console)");
-  addMessage("name (reset name)");
-  addMessage("piglatin (convert sentence to pig latin)");
+  addMessage("changeName (reset name)");
+  addMessage("pigLatin (convert sentence to pig latin)");
   addMessage("roboger (talk to Mr. Roboger)");
-  addMessage("romannumerals (convert number to Roman numerals)");
+  addMessage("romanNumerals (convert number to Roman numerals)");
   scrollToInput()
   commandPrompt();
 }
@@ -37,19 +37,25 @@ function clear () {
   commandPrompt();
 }
 
-function name () {
-  $("#prompt").text("Enter your name:")
-  $("#form1").submit(function(event){
-    event.preventDefault();
-    let name = $("#main-input").val();
-    duplicateInputLine();
-    clearInput();
-    addMessage("Username updated.")
-    $("span#input-name").text(name);
-    $("span#input-fluff").text("@PRIME"+"\xa0");
-    scrollToInput()
-    commandPrompt();
-  });
+function changeName () {
+  $("#prompt").text("Enter your first name:");
+    $("#form1").submit(function(event){
+      event.preventDefault();
+      let inputName = $("#main-input").val();
+      duplicateInputLine();
+      clearInput();
+      if (validateInput(inputName, /^[a-zA-Z][a-zA-Z\s]*$/, 0, 21)) {
+        addMessage("Username updated.");
+        $("span#input-name").text(inputName);
+        $("span#input-fluff").text("@PRIME"+"\xa0");
+        scrollToInput();
+        commandPrompt();
+      } else {
+        addMessage("Invalid input. Enter a string between 1 and 20 characters. No numbers, symbols, or punctuation.")
+        scrollToInput();
+        changeName();
+      }
+    });
 }
 
 function roboger () {
@@ -89,7 +95,7 @@ function robogerExecute (toggle) {
   });
 }
 
-function piglatin () {
+function pigLatin () {
   $("#prompt").text("Enter a sentence to be converted to pig latin (No numbers, symbols, or punctuation, 300 character limit):")
   $("#form1").submit(function(event) {
     event.preventDefault();
@@ -103,12 +109,12 @@ function piglatin () {
     } else {
       addMessage("Invalid sentence. No numbers, symbols, or punctuation. 300 character limit. ")
       scrollToInput()
-      piglatin(toggle);
+      pigLatin();
     }
   });
 }
 
-function romannumerals () {
+function romanNumerals () {
   $("#prompt").text("Enter a number between 1 and 3999 to be converted to Roman numerals:")
   $("#form1").submit(function(event) {
     event.preventDefault();
@@ -122,7 +128,7 @@ function romannumerals () {
     } else {
       addMessage("Invalid number. Enter an integer from 1 to 3999.")
       scrollToInput();
-      romannumerals();
+      romanNumerals();
     }
   });
 }
