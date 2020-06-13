@@ -12,6 +12,7 @@ function commandPrompt () {
     duplicateInputLine();
     clearInput();
     if (typeof window[command] === "function") {
+      scrollToInput()
       window[command]();
     } else {
       invalidCommand();
@@ -25,6 +26,7 @@ function help () {
   addMessage("piglatin (convert sentence to piglatin)");
   addMessage("roboger (talk to Mr. Roboger)");
   addMessage("romannumeral (convert number to Roman numerals)");
+  scrollToInput()
   commandPrompt();
 }
 
@@ -45,6 +47,7 @@ function name () {
     addMessage("Username updated")
     $("span#input-name").text(name);
     $("span#input-fluff").text("@PRIME"+"\xa0");
+    scrollToInput()
     commandPrompt();
   });
 }
@@ -57,9 +60,11 @@ function roboger () {
     duplicateInputLine();
     clearInput();
     if (toggle === "forward" || toggle === "backward") {
+      scrollToInput()
       robogerExecute(toggle);
     } else {
       addMessage("Invalid response. Please enter \"forward\" or \"backward\".")
+      scrollToInput()
       roboger();
     }
   });
@@ -74,9 +79,11 @@ function robogerExecute (toggle) {
     clearInput();
     if (validateInput(number, /^[0-9]*$/, 0, 100)) {
       addMessage(createResponse(number, $("#input-name").text(), toggle));
+      scrollToInput()
       commandPrompt();
     } else {
       addMessage("Invalid Number. Enter an integer from 1 to 99.")
+      scrollToInput()
       robogerExecute(toggle);
     }
   });
@@ -91,9 +98,11 @@ function piglatin () {
     clearInput();
     if (validateInput(sentence, /^[a-zA-Z][a-zA-Z\s]*$/, 0, 301)) {
       addMessage(sentence.split(" ").map(word => makeWordPigLatin(word)).join(" "));
+      scrollToInput()
       commandPrompt();
     } else {
       addMessage("Invalid sentence. No numbers, symbols, or punctuation. 300 character limit. ")
+      scrollToInput()
       piglatin(toggle);
     }
   });
@@ -108,9 +117,11 @@ function romannumeral () {
     clearInput();
     if (validateInput(number, /^[0-9]*$/, 0, 4000)) {
       addMessage(getNumeral(number));
+      scrollToInput()
       commandPrompt();
     } else {
       addMessage("Invalid number. Enter an integer from 1 to 3999.")
+      scrollToInput()
       romannumeral();
     }
   });
@@ -137,6 +148,10 @@ function clearInput () {
 
 function addMessage (input) {
   $("section#input-section").before("<p class=\"delete\">" + input + "</p>");
+}
+
+function scrollToInput () {
+  document.querySelector("p#input-line").scrollIntoView({behavior: 'smooth'});
 }
 
 //BUSINESS LOGIC
