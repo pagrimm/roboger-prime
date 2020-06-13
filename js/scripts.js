@@ -22,10 +22,10 @@ function commandPrompt () {
 
 function help () {
   addMessage("clear (clear the console)");
-  addMessage("name (reset username)");
-  addMessage("piglatin (convert sentence to piglatin)");
+  addMessage("name (reset name)");
+  addMessage("piglatin (convert sentence to pig latin)");
   addMessage("roboger (talk to Mr. Roboger)");
-  addMessage("romannumeral (convert number to Roman numerals)");
+  addMessage("romannumerals (convert number to Roman numerals)");
   scrollToInput()
   commandPrompt();
 }
@@ -38,13 +38,13 @@ function clear () {
 }
 
 function name () {
-  $("#prompt").text("Enter username:")
+  $("#prompt").text("Enter your name:")
   $("#form1").submit(function(event){
     event.preventDefault();
     let name = $("#main-input").val();
     duplicateInputLine();
     clearInput();
-    addMessage("Username updated")
+    addMessage("Username updated.")
     $("span#input-name").text(name);
     $("span#input-fluff").text("@PRIME"+"\xa0");
     scrollToInput()
@@ -108,7 +108,7 @@ function piglatin () {
   });
 }
 
-function romannumeral () {
+function romannumerals () {
   $("#prompt").text("Enter a number between 1 and 3999 to be converted to Roman numerals:")
   $("#form1").submit(function(event) {
     event.preventDefault();
