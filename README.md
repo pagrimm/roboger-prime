@@ -1,10 +1,10 @@
-# Mr. Roboger's Neighborhood
+# Roboger Prime
 **Weekly Project for Epicodus**  
 By Peter Grimm, 05.29.2020
 
 ## Description
 
-Week 3 project for Epicodus. A page that will return a list of numbers from 0 to the inputted number, and replace numbers containing a one, two, or three with snippets of text. Designed to showcase my skills in looping Javascript logic, behavior driven development, and the separation of business and user interface logic.
+Week 3 project for Epicodus. A page that will return a list of numbers from 0 to the inputted number, and replace numbers containing a one, two, or three with snippets of text. Designed to showcase my skills in looping Javascript logic, behavior driven development, and the separation of business and user interface logic. This prime version also combines the pig latin and Roman numeral exercises from earlier in the week. The interface is also an abomination.
 
 ## Specifications
 | Behavior                                                                           | Input  | Output                                   |
@@ -20,10 +20,10 @@ Week 3 project for Epicodus. A page that will return a list of numbers from 0 to
 
 ## Setup/Installation Requirements
 
-* Clone this repository using the command `git clone https://github.com/pagrimm/mr-roboger-project.git`
-* Navigate to the `mr-roboger-project` folder
+* Clone this repository using the command `git clone https://github.com/pagrimm/roboger-prime.git`
+* Navigate to the `roboger-prime` folder
 * Open `index.html` in a browser of your choice
-* This project is also available on GitHub pages: https://pagrimm.github.io/mr-roboger-project/
+* This project is also available on GitHub pages: https://pagrimm.github.io/roboger-prime/
 
 ## Technologies Used
 
