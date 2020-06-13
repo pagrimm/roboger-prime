@@ -1,0 +1,120 @@
+h1 {
+  font-size:1.5rem;
+}
+
+body {
+  font-family: 'More Perfect DOS VGA';
+  color: #66FF66;
+  background-color: black;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+p.input {
+  display:table;
+  width:100%;
+}
+
+p#prompt {
+  color: white;
+  margin-top: 30px;
+}
+
+span.input-start {
+  display:table-cell;
+  width: 1px;
+}
+
+span.fluff {
+  color: blue;
+}
+
+span.name {
+  color: teal;
+}
+
+input {
+  outline: none;
+  background-color: black;
+  color: #66FF66;
+  border: 0px;
+  display:table-cell;
+  width:100%;
+  margin-left: 5px;
+  font-family: 'More Perfect DOS VGA';
+  font-size: 1em;
+}
+
+button {
+	background: #66FF66;
+	color: black;
+	border: none;
+	padding: 2px;
+	font: inherit;
+	cursor: pointer;
+  outline: inherit;
+  width: 80px;
+}
+
+.inactive-button {
+	background: black;
+	color: #66FF66;
+}
+
+pre {
+  display: block;
+  color: inherit;
+  font-family: 'More Perfect DOS VGA';
+  font-size: 1em;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+button:hover {
+  background: #009900;
+}
+
+#output-section {
+  display: none;
+  margin-top: 20px;
+  margin-right: 20px;
+  border: 5px solid #66FF66;
+  padding: 10px;
+}
+
+#output {
+  margin-bottom: 0px;
+}
+
+#robot {
+  font-size: 5rem;
+  text-align: center;
+  line-height: 0;
+  margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  #robot {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  input {
+    width:90%;
+  }
+}
+
+@media only screen and (max-width: 544px) {
+  input {
+    width:80%;
+  }
+}
+
+@font-face {
+  font-family: 'More Perfect DOS VGA';
+  src: url("../font/MorePerfectDOSVGA.ttf");
+}
