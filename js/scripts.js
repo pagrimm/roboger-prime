@@ -5,7 +5,7 @@ $(document).ready(function() {
 });
 
 function commandPrompt () {
-  $("#prompt").text("ENTER COMMAND (\"HELP\" FOR LIST):")
+  $("#prompt").text("Enter command (\"help\" for list):")
   $("#form1").submit(function(event){
     event.preventDefault();
     let command = $("#main-input").val().toLowerCase();
@@ -20,10 +20,11 @@ function commandPrompt () {
 }
 
 function help () {
-  addMessage("clear    (clear the console)");
-  addMessage("name     (reset username)");
-  addMessage("restart  (restart Roboger Prime)");
-  addMessage("roboger  (talk to Mr. Roboger)");
+  addMessage("clear (clear the console)");
+  addMessage("name (reset username)");
+  addMessage("piglatin (convert sentence to piglatin)");
+  addMessage("roboger (talk to Mr. Roboger)");
+  addMessage("romannumeral (convert number to Roman numerals)");
   commandPrompt();
 }
 
@@ -34,21 +35,14 @@ function clear () {
   commandPrompt();
 }
 
-function restart () {
-  clear();
-  $("span#input-name").text("");
-  $("span#input-fluff").text("");
-  name();
-}
-
 function name () {
-  $("#prompt").text("ENTER USERNAME:")
+  $("#prompt").text("Enter username:")
   $("#form1").submit(function(event){
     event.preventDefault();
     let name = $("#main-input").val();
     duplicateInputLine();
     clearInput();
-    addMessage("USERNAME UPDATED")
+    addMessage("Username updated")
     $("span#input-name").text(name);
     $("span#input-fluff").text("@PRIME"+"\xa0");
     commandPrompt();
@@ -56,7 +50,7 @@ function name () {
 }
 
 function roboger () {
-  $("#prompt").text("DO YOU WANT MR. ROBOGER TO SPEAK FORWARD OR BACKWARD?")
+  $("#prompt").text("Do you want Mr. Roboger to speak forward or backward?")
   $("#form1").submit(function(event){
     event.preventDefault();
     let toggle = $("#main-input").val().toLowerCase();
@@ -65,24 +59,59 @@ function roboger () {
     if (toggle === "forward" || toggle === "backward") {
       robogerExecute(toggle);
     } else {
-    invalidCommand()
+      addMessage("Invalid response. Please enter \"forward\" or \"backward\".")
+      roboger();
     }
   });
 }
 
 function robogerExecute (toggle) {
-  $("#prompt").text("ENTER AN INTEGER FROM 1 TO 99 TO TALK TO MR. ROBOGER:")
+  $("#prompt").text("Enter an integer from 1 to 99 to speak to Mr. Roboger:")
   $("#form1").submit(function(event){
     event.preventDefault();
-    let number = $("#main-input").val()
+    let number = $("#main-input").val();
     duplicateInputLine();
     clearInput();
     if (validateInput(number, /^[0-9]*$/, 0, 100)) {
       addMessage(createResponse(number, $("#input-name").text(), toggle));
       commandPrompt();
     } else {
-      addMessage("INVALID NUMBER")
+      addMessage("Invalid Number. Enter an integer from 1 to 99.")
       robogerExecute(toggle);
+    }
+  });
+}
+
+function piglatin () {
+  $("#prompt").text("Enter a sentence to be converted to pig latin (No numbers, symbols, or punctuation, 300 character limit):")
+  $("#form1").submit(function(event) {
+    event.preventDefault();
+    let sentence = $("#main-input").val()
+    duplicateInputLine();
+    clearInput();
+    if (validateInput(sentence, /^[a-zA-Z][a-zA-Z\s]*$/, 0, 301)) {
+      addMessage(sentence.split(" ").map(word => makeWordPigLatin(word)).join(" "));
+      commandPrompt();
+    } else {
+      addMessage("Invalid sentence. No numbers, symbols, or punctuation. 300 character limit. ")
+      piglatin(toggle);
+    }
+  });
+}
+
+function romannumeral () {
+  $("#prompt").text("Enter a number between 1 and 3999 to be converted to Roman numerals:")
+  $("#form1").submit(function(event) {
+    event.preventDefault();
+    let number = $("#main-input").val()
+    duplicateInputLine();
+    clearInput();
+    if (validateInput(number, /^[0-9]*$/, 0, 4000)) {
+      addMessage(getNumeral(number));
+      commandPrompt();
+    } else {
+      addMessage("Invalid number. Enter an integer from 1 to 3999.")
+      romannumeral();
     }
   });
 }
@@ -98,7 +127,7 @@ function duplicateInputLine () {
 }
 
 function invalidCommand () {
-  $("section#input-section").before("<p class=\"delete\">INVALID COMMAND</p>");
+  $("section#input-section").before("<p class=\"delete\">Invalid command.</p>");
   commandPrompt();
 }
 
@@ -110,6 +139,7 @@ function addMessage (input) {
   $("section#input-section").before("<p class=\"delete\">" + input + "</p>");
 }
 
+//BUSINESS LOGIC
 //function to validate any number or string input, if you pass in the regex and min and max length of the string/number
 function validateInput (input, regex, min, max) {
   if (regex.test(input) && parseInt(input) > min && parseInt(input) < max) {
@@ -121,8 +151,6 @@ function validateInput (input, regex, min, max) {
   }
 }
 
-
-//BUSINESS LOGIC
 //function to create Mr. Roboger's output, takes an input number and input name, feeds them into the checkResponse function, and then either shift or unshifts the results depending on the user's forward or backwards toggle
 function createResponse (inputNumber, inputName, toggle){
   let outputArray = [];
@@ -150,5 +178,60 @@ function checkResponse (inputNumber, inputName){
     return roboResponse[highNumber - 1];
   } else {
     return inputNumber;
+  }
+}
+
+function makeWordPigLatin (inputWord) {  
+  const vowels = ["a", "e", "i", "o", 'u'];
+  for (i = 0; i < inputWord.length; i++) {
+    if (vowels.indexOf(inputWord.charAt(i).toLowerCase()) !== -1) {
+      break;
+      }
+    if (inputWord.slice(i, i + 2).toLowerCase() === "qu") { 
+      i++;
+      }
+  }
+  if (i === 0) {
+    return inputWord + "way";
+  } else {
+    return inputWord.slice(i) + inputWord.slice(0, i) + "ay";
+  }
+}
+
+function getNumeral (inputNumber) {
+  let currentNumber = inputNumber;
+  let currentNumeral = "";
+  while (currentNumber > 0) {
+    currentNumeral = currentNumeral + numeralCheckNumber(currentNumber)[1];
+    currentNumber = numeralCheckNumber(currentNumber)[0];
+  }
+  return currentNumeral;
+}
+
+function numeralCheckNumber (inputNumber) {
+  let numeralKey = [
+    {"number":1000,"numeral":"M"},
+    {"number":900,"numeral":"CM"},
+    {"number":500,"numeral":"D"},
+    {"number":400, "numeral":"CD"},
+    {"number":100, "numeral":"C"},
+    {"number":90, "numeral":"XC"},
+    {"number":50, "numeral":"L"},
+    {"number":40, "numeral":"XL"},
+    {"number":10, "numeral":"X"},
+    {"number":9, "numeral":"IX"},
+    {"number":5, "numeral":"V"},
+    {"number":4, "numeral":"IV"},
+    {"number":1, "numeral":"I"}
+  ];
+  let outputNumber;
+  let outputNumeral;
+  for (i = 0; i < numeralKey.length; i++) {
+  if (inputNumber >= numeralKey[i].number) {
+    outputNumeral = numeralKey[i].numeral;
+    outputNumber = inputNumber - numeralKey[i].number;
+    return [outputNumber, outputNumeral];
+    break;
+    }
   }
 }
