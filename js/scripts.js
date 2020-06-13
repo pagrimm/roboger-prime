@@ -121,8 +121,8 @@ function romannumerals () {
       commandPrompt();
     } else {
       addMessage("Invalid number. Enter an integer from 1 to 3999.")
-      scrollToInput()
-      romannumeral();
+      scrollToInput();
+      romannumerals();
     }
   });
 }
